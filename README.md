@@ -1,1 +1,2 @@
-# guessinggame
+# operativni_sistemi
+Djordje Molnar
