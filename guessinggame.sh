@@ -1,24 +1,26 @@
+
 #!/usr/bin/env bash
 
-clear
-declare -i numFiles
-numFiles=$(find . -maxdepth 1 -not -type d | wc --lines)
+echo "[Welcome to Guessing game v0.1]"
 
-function makeValidGuess {
-	until read -p "Enter your guess:  " guess;
-	[[ "$guess" =~ ^[0-9]+$ ]]; do
-		echo -e "\nEnter unnegative number!\n"
-	done
+function ask {
+	echo "Please enter the number of files in the current directory:"
+	read guess
+    files=$(ls -1 | wc -l)
 }
 
-while makeValidGuess; do
-	if (( guess < numFiles )); then
-		echo -e "\nYour guess is to low."
-	elif (( guess > numFiles )); then
-		echo -e "\nYour guess is too high."
+ask
+
+while [[ $guess -ne $files ]]
+do
+	if [[ $guess -lt $files ]] 
+	then
+		echo "Too low."
 	else
-		echo -e "\nCongratulations! Answer $numFiles is correct!"
-		exit
+		echo "Too high."
 	fi
+	ask
 done
 
+echo "Well done! It is the correct answer, here is the list of files:"
+echo "---" && ls -1
